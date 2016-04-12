@@ -8,8 +8,8 @@ const BlogImage = ({blogInfo}) => {
     return (
 
 
-        <div className="image-container">
-            <img className="blog-intro-img" src={blogInfo.image} alt=""/>
+        <div>
+            <img src={blogInfo.image} alt=""/>
             <BlogLink blogInfo={blogInfo} />
         </div>
     );
