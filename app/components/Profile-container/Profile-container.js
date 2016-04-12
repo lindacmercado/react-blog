@@ -2,14 +2,15 @@ import React from 'react';
 import Profile from './Profile/Profile';
 import PhotoGrid from './Image-block/Image-block';
 import {getUserInfo,getPosts} from '../../utils/helpers'
+import {connect} from 'react-redux';
+import {likeBlog, unLikeBlog} from '../../Redux/Like';
 
-class  ProfileContainer extends React.Component {
+class ProfileContainer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             cardData: [],
             userInfo: {},
-
         }
     }
     componentDidMount(){
@@ -31,7 +32,7 @@ class  ProfileContainer extends React.Component {
     render(){
         return (
             <div>
-                <Profile user={this.state.userInfo} />
+                <Profile user={this.state.userInfo} like={this.props.like} likeBlog={this.props.likeBlog} unLikeBlog={this.props.unLikeBlog}/>
                 <PhotoGrid cardData={this.state.cardData} />
             </div>
         )
@@ -40,5 +41,14 @@ class  ProfileContainer extends React.Component {
 }
 
 
-export default ProfileContainer
+
+function stateToProps(state){
+    return {
+        like: state.like
+    }
+}
+
+var connectedProfileContainer = connect(stateToProps, {likeBlog: likeBlog, unLikeBlog: unLikeBlog})(ProfileContainer)
+
+export default connectedProfileContainer
 

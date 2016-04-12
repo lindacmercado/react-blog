@@ -123,25 +123,30 @@ There are other systems you can use to work with React, but it's worth taking th
 
 * The webpack.config.js file is already completed and looks like this
 
-```javascript
+```
 
 module.exports = {
-  entry   : {entry point or array of entry points}
-, devtool : {options for devtool}
-, output  : {
-    filename : output filename
-  , path     : output path
-  }
-, module : {
-    loaders : [
-      {array of loaders here}
+  entry: "./app/App.js",
+  output: {
+    filename: "public/bundle.js"
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          presets: ['react', 'es2015']
+        }
+      },
+      {test: /\.css$/, loader: 'style!css', exclude: /node_modules/},
+      {test: /\.png$/, loader: 'url', exclude: /node_modules/}
     ]
   }
-, plugins : [{array of plugins here}]
-, resolve : {
-    extensions : [array of file extensions to resolve]
-  }
-}
+};
+
 ```
 
 Now, you should be able to run `webpack` without anything breaking!
@@ -156,11 +161,11 @@ Now, you should be able to run `webpack` without anything breaking!
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory  } from 'react-router';
+import { Router, hashHistory  } from 'react-router';
 import routes from './config/routes';
 
 ReactDOM.render(
-    <Router history={ browserHistory }>{routes}</Router>,
+    <Router history={ hashHistory }>{routes}</Router>,
     document.getElementById('app')
 )
 
@@ -209,7 +214,6 @@ Our home component is the container component that holds our Blog-intro-containe
 
 import React from 'react';
 import BlogIntro from '../Blog-intro-container/Blog-intro-container';
-require('./Home.css');
 
 class Home extends React.Component {
 
@@ -228,17 +232,25 @@ export default Home
 
 ```javascript
 
-
 import React from 'react';
 import BlogIntro from '../Blog-intro-container/Blog-intro-container';
-require('./Home.css');
+import {getUserInfo,getPosts} from '../../utils/helpers'
 
 class Home extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            cardData: [],
+            userInfo: {},
+            intro: ''
+        }
+    }
 
     render(){
         return (
-            <div className="main-home-container">
-               <BlogIntro />
+            <div>
+                <BlogIntro />
             </div>
         )
     }
@@ -247,6 +259,7 @@ class Home extends React.Component {
 
 
 export default Home
+
 
 
 
@@ -277,8 +290,6 @@ import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
 
-require('./Blog-intro-container.css');
-
 
 
 ```
@@ -299,7 +310,7 @@ import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
 
-require('./Blog-intro-container.css');
+
 
 class BlogIntroContainer extends React.Component {
     constructor method goes here
@@ -320,7 +331,7 @@ import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
 
-require('./Blog-intro-container.css');
+
 
 class BlogIntroContainer extends React.Component {
      constructor(props){}
@@ -344,14 +355,12 @@ export default BlogIntroContainer
 ####
 
 
-```
+```javascript
 
    import React from 'react';
    import {usersBlogData} from '../../utils/helpers'
    import BlogImage from './Blog-image/Blog-image';
    import BlogMeta from './Blog-meta/Blog-meta';
-
-   require('./Blog-intro-container.css');
 
    class BlogIntroContainer extends React.Component {
          constructor(props){
@@ -370,14 +379,12 @@ export default BlogIntroContainer
 ####
 
 
-```
+```javascript
 
 import React from 'react';
 import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
-
-require('./Blog-intro-container.css');
 
 class BlogIntroContainer extends React.Component {
        constructor(props){
@@ -401,7 +408,8 @@ export default BlogIntroContainer
 * This information will be covered on day 2 so for now just copy and paste the code below under your constructor function
 
 
-```
+```javascript
+
     componentDidMount(){
     this.init()
 }
@@ -430,7 +438,7 @@ We can do this by using the javascript map method.
 * Inside the newly created div create a map method that iterates over the userBlogData, add data parameter to the map method. This map method is going to return the BlogImage and BlogMeta components
 
 
-```
+```javascript
 
   render(){
         return (
@@ -470,7 +478,7 @@ We can do this by using the javascript map method.
 
 
 
-```
+```javascript
 
   render(){
         return (
@@ -509,12 +517,10 @@ We can do this by using the javascript map method.
 
 
 
-```
+```javascript
+
   import React from 'react';
   import BlogLink from './Blog-link/Blog-link';
-  require('./Blog-image.css');
-
-
 
   const function name = (blogInfo object) => {
       return (
@@ -572,7 +578,7 @@ We can do this by using the javascript map method.
 ####
 
 
-```
+```javascript
 
  <BlogLink blogInfo={blogInfo} />
 
@@ -598,11 +604,9 @@ We can do this by using the javascript map method.
 
 
 
-```
+```javascript
 
  import React from 'react';
- require('./Blog-meta.css');
-
 
 
  const BlogMeta = ({metaInfo}) => {
@@ -637,8 +641,6 @@ We can do this by using the javascript map method.
 ```
 
  import React from 'react';
- require('./Blog-meta.css');
-
 
 
  const BlogMeta = ({metaInfo}) => {
@@ -703,13 +705,12 @@ We can do this by using the javascript map method.
 ####
 
 
-```
+```javascript
 
 import React from 'react';
 import Profile from './Profile/Profile';
 import PhotoGrid from './Image-block/Image-block';
 import {getUserInfo,getPosts} from '../../utils/helpers'
-require('./Profile-container.css');
 
 class  ProfileContainer extends React.Component {
     constructor(add props){
@@ -736,13 +737,12 @@ export default ProfileContainer
 ####
 
 
-```
+```javascript
 
 import React from 'react';
 import Profile from './Profile/Profile';
 import PhotoGrid from './Image-block/Image-block';
 import {getUserInfo,getPosts} from '../../utils/helpers'
-require('./Profile-container.css');
 
 class  ProfileContainer extends React.Component {
     constructor(props){
@@ -772,7 +772,8 @@ export default ProfileContainer
 * This information will be covered on day 2 so for now just copy and paste the code below under your constructor function
 
 
-```
+```javascript
+
     componentDidMount(){
            getUserInfo(this.props.params.userid).then(function(data){
                this.setState({
@@ -804,7 +805,7 @@ export default ProfileContainer
 
 
 
-```
+```javascript
 
 render(){
         return (
@@ -822,7 +823,7 @@ render(){
 ```
 render(){
         return (
-            <div className="main-profile-container">
+            <div>
                 <Profile user={this.state.userInfo} />
                 <PhotoGrid cardData={this.state.cardData} />
             </div>
@@ -855,10 +856,9 @@ render(){
 * Now that we have the skeleton of the component created we can display the data
 * Inside the return statement you can start to display your data by acessing the properties on the user object
 
-```
+```javascript
 
 import React from 'react';
-require('./Profile.css');
 
 
 const Profile = ({user}) => {
@@ -895,10 +895,9 @@ export default Profile
 
 
 
-```
+```javascript
 
 import React from 'react';
-require('./Profile.css');
 
 
 const Profile = ({user}) => {
@@ -959,10 +958,9 @@ export default Profile
 
 
 
-```
+```javascript
 
 import React from 'react';
-require('./Image-block.css');
 
 
 const PhotoGrid = ({cardData}) => {
@@ -999,24 +997,22 @@ export default PhotoGrid
 
 
 
-```
+```javascript
 
 import React from 'react';
-require('./Image-block.css');
 
 
 const PhotoGrid = ({cardData}) => {
     return (
-        <div className="list-container">
-            <div className="grid-list">
+        <div>
+            <div>
                 {cardData.map((data) => {
                     return (
-                        //The Key here should be a id from our database
-                        <div className="list-group-item" key={data.id}>
-                            <div className="blog-image-container">
+                        <div key={data.id}>
+                            <div>
                                 <img src={data.link} alt={data.name}/>
                             </div>
-                            <div className="desc">
+                            <div>
                                 <p>{data.desc}</p>
                             </div>
                         </div>
@@ -1060,9 +1056,9 @@ export default PhotoGrid
 * Make sure you export this function or you will not be able to import it into another file
 
 
-```
+```javascript
 
-export let getPosts = function (){
+export function getPosts(){
  return axios.get(`http://localhost:8080/api/blogData`)
      .then(callback function {
        return data;
@@ -1077,20 +1073,20 @@ export let getPosts = function (){
 ```
  ####
 
- ```
+
+ ```javascript
 
 
-export let getPosts = function (){
- return axios.get(`http://localhost:8080/api/blogData`)
-     .then(function (data) {
-       return data;
-     })
-     .catch(function (data) {
-         return data
-     });
+export function getPosts (){
+    return axios.get(`http://localhost:8080/api/blogData`)
+        .then(function (data) {
+            return data;
+        })
+        .catch(function (data) {
+            return data
+        });
 
 };
-
 
  ```
 
@@ -1102,10 +1098,10 @@ export let getPosts = function (){
 * Make sure you export this function or you will not be able to import it into another file
 
 
-```
+```javascript
 
 
-export let getUserInfo = function (id) {
+export function getUserInfo(id) {
     return axios.get(`http://localhost:8080/api/userInfo/${id}`)
         .then(callback function {
             return data;
@@ -1121,11 +1117,11 @@ export let getUserInfo = function (id) {
 
  ####
 
- ```
+ ```javascript
 
 
 
-export let getUserInfo = function (id) {
+export function getUserInfo (id) {
     return axios.get(`http://localhost:8080/api/userInfo/${id}`)
         .then(function (data) {
             return data;
@@ -1147,10 +1143,10 @@ export let getUserInfo = function (id) {
 * Make sure you export this function or you will not be able to import it into another file
 
 
-```
+```javascript
 
 
-export let usersBlogData = function () {
+export function  usersBlogData  () {
     return axios.get(`http://localhost:8080/api/usersBlogData`)
         .then(callback function {
             return data;
@@ -1166,17 +1162,17 @@ export let usersBlogData = function () {
 
  ####
 
- ```
+ ```javascript
 
 
 
-export let usersBlogData = function () {
+export function  usersBlogData () {
     return axios.get(`http://localhost:8080/api/usersBlogData`)
         .then(function (data) {
             return data;
         })
         .catch(function (data) {
-           return data
+            return data
         });
 
 };
@@ -1213,7 +1209,7 @@ export let usersBlogData = function () {
 
 ####
 
-```
+```javascript
 
  componentDidMount(){
         invoke init
@@ -1231,7 +1227,7 @@ export let usersBlogData = function () {
 
 
 
-```
+```javascript
 
    componentDidMount(){
          this.init()
@@ -1265,7 +1261,7 @@ export let usersBlogData = function () {
 
 ####
 
-```
+```javascript
 
     componentDidMount(){
         getUserInfo(get id from url params).then(callback function with data{
@@ -1283,7 +1279,7 @@ export let usersBlogData = function () {
 ####
 
 
-```
+```javascript
 
     componentDidMount(){
         getUserInfo(this.props.params.userid).then(function(data){
@@ -1307,7 +1303,7 @@ export let usersBlogData = function () {
 
 ####
 
-```
+```javascript
 
     componentDidMount(){
            getUserInfo(this.props.params.userid).then(function(data){
@@ -1329,7 +1325,7 @@ export let usersBlogData = function () {
 ####
 
 
-```
+```javascript
 
 
     componentDidMount(){
@@ -1364,7 +1360,7 @@ export let usersBlogData = function () {
 * Below is an example of what your routes.js should look like
 
 
-```
+```javascript
 
 import React from 'react';
 import Home from '../components/Home/Home';
@@ -1388,10 +1384,267 @@ export default (
 
 ## 3)  Redux
 
-### Setting up redux
+### Installing Dependencies
 
-* use npm to install redux
-*
+* npm install --save redux
+* npm install --save react-redux
+
+### Setting up App.js
+
+* We need to import of few things into our App.js file
+* Import Provider from react-redux
+* Import createStore from redux
+* Import reducer from ./Redux/Like
+
+### Creating the redux store in App.js
+
+* Now that we have imported our dependencies we need to create a redux store
+* Create a variable called store that is equal to createStore(reducer);
 
 
+* Now that we have created the redux store we need to implement it on the Provider component
+* The Provider component is going to wrap our Router component
+* On the Provider component that is wrapping our Router component add an attribute called store that is equal to store "dont forget your { } brackets"
+
+####
+
+```javascript
+
+ReactDOM.render(
+    <Provider store={store}>
+        <Router history={ hashHistory }>{routes}</Router>
+    </Provider>,
+    document.getElementById('app')
+)
+
+```
+
+
+### Creating the reducer
+
+* Now we need to go into our Like.js file and create the reducer that we will be dispatching actions to
+* Create a variable called LIKE set it equal to 'LIKE'
+* Create a variable called UNLIKE set it equal to 'UNLIKE'
+* Create a variable called initialState that is equal to an object that has a property called like that has a the value of 'false'
+* Now we need to actually create the reducer function
+* export a function called reducer
+* The reducer function takes state and action as parameters
+* It looks like this
+
+```javascript
+
+export function reducer(state = initialState, action = {}) {}
+
+```
+
+* Now we need to write a javascript switch statement
+* Inside the reducer function write a switch statement that takes action.type as an argument
+* The first case is LIKE that returns like: "true"
+* The second case is UNLIKE that return like: "false"
+* Make sure your default return state after your case statements
+
+
+
+####
+
+```javascript
+
+const LIKE = 'LIKE';
+const UNLIKE = 'UNLIKE';
+
+const initialState = {
+    like: "false"
+};
+
+export function reducer(state = initialState, action = {}) {
+   Write your switch statment here
+}
+
+
+```
+####
+
+```javascript
+
+const LIKE = 'LIKE';
+const UNLIKE = 'UNLIKE';
+
+const initialState = {
+    like: "false"
+};
+
+export function reducer(state = initialState, action = {}) {
+    switch (action.type) {
+        case LIKE:
+            return {
+                like:"true"
+            };
+        case UNLIKE:
+            return {
+                like: "false"
+            };
+
+        default:
+            return state;
+    }
+}
+
+
+
+```
+
+
+### Creating the actions
+
+* Inside the Like.js file under the reducer function we need to write two actions
+* The first is likeBlog function that returns the type: LIKE
+* The second is a unLikeBlog function that returns the type: UNLIKE
+
+
+####
+
+```javascript
+
+export function likeBlog() {
+    return {
+        type: LIKE
+    };
+}
+
+export function unLikeBlog() {
+    return {
+        type: UNLIKE
+    };
+}
+
+```
+
+
+
+
+### Implementing redux in Profile-container.js
+
+* Import connect from 'react-redux'
+* Import likeBlog and unLikeBlog from Like.js
+* Under our component we need to add a few things to get redux to work
+* Write a function called stateToProps that takes state as a parameter and returns a property called like that has a value of state.like
+* Under the stateToProps function create a variable called connectedProfileContainer that is equal to connect(stateToProps, {likeBlog: likeBlog, unLikeBlog: unLikeBlog})(ProfileContainer)
+* Change the export default from ProfileContainer to connectedProfileContainer
+
+
+####
+
+```javascript
+
+function stateToProps(state){
+    return {
+        like: state.like
+    }
+}
+
+
+
+var connectedProfileContainer = connect(stateToProps, {likeBlog: likeBlog, unLikeBlog: unLikeBlog})(ProfileContainer)
+
+export default connectedProfileContainer
+
+
+
+```
+
+
+### Passing props to Profile
+
+* Now that we need to pass some props to our Profile component
+
+* On the profile component inside the ProfileContainer add these attributes like={this.props.like}, likeBlog={this.props.likeBlog}, unLikeBlog={this.props.unLikeBlog}
+
+<Profile user={this.state.userInfo} like={this.props.like} likeBlog={this.props.likeBlog} unLikeBlog={this.props.unLikeBlog}/>
+
+
+
+
+
+
+### Invoking likeBlog and unLikeBlog
+
+* Inside the the Profile component create two buttons
+* The first button should invoke likeBlog onClick
+* The second button should invoke unLikeBlog onClick
+* Add a h3 tag that will display the like property being passed in as props from redux
+* You should now be able to change the like to false or true onClick
+
+####
+
+```javascript
+
+
+const Profile = ({user, like, likeBlog, unLikeBlog}) => {
+    return (
+        <div>
+            <div>
+                <img src={user.image} alt={user.username}/>
+            </div>
+            <div>
+                <h1>{user.username}</h1>
+                <p>{user.intro}</p>
+                <div>
+                    <h1>{user.likeCount}</h1>
+                    <h3>Like : {like}</h3>
+                    <button onClick={Invoke the likeBlog}> LIKE </button>
+                    <button onClick={Invoke the unlikeBlog}> UNLIKE </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+```
+####
+
+```javascript
+
+
+const Profile = ({user, like, likeBlog, unLikeBlog}) => {
+    return (
+        <div>
+            <div>
+                <img src={user.image} alt={user.username}/>
+            </div>
+            <div>
+                <h1>{user.username}</h1>
+                <p>{user.intro}</p>
+                <div>
+                    <h1>{user.likeCount}</h1>
+                    <h3>Like : {like}</h3>
+                    <button onClick={()=>likeBlog()}> LIKE </button>
+                    <button onClick={()=>unLikeBlog()}> UNLIKE </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+```
+
+
+## Black Diamond: Local Storage
+
+### Match the styles to the designs
+### Change the color of the heqrt when a blog is liked and update the like count
+
+
+Good luck!
+
+
+## Contributions
+If you see a problem or a typo, please fork, make the necessary changes, and create a pull request so we can review your changes and merge them into the master repo and branch.
+
+## Copyright
+
+© DevMountain LLC, 2016. Unauthorized use and/or duplication of this material without express and written permission from DevMountain, LLC is strictly prohibited. Excerpts and links may be used, provided that full and clear credit is given to DevMountain with appropriate and specific direction to the original content.
+
+<img src="https://devmounta.in/img/logowhiteblue.png" width="250">
 

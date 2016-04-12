@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Profile = ({user}) => {
+const Profile = ({user, like, likeBlog, unLikeBlog}) => {
     return (
         <div>
             <div>
@@ -10,11 +10,11 @@ const Profile = ({user}) => {
                 <h1>{user.username}</h1>
                 <p>{user.intro}</p>
                 <div>
-                    <div></div>
                     <h1>{user.likeCount}</h1>
+                    <h3>Like : {like}</h3>
+                    <button onClick={()=>likeBlog()}> LIKE </button>
+                    <button onClick={()=>unLikeBlog()}> UNLIKE </button>
                 </div>
-
-
             </div>
         </div>
     );
@@ -24,7 +24,5 @@ const Profile = ({user}) => {
 Profile.propTypes = {
     user: React.PropTypes.object.isRequired
 };
-
-
 
 export default Profile
