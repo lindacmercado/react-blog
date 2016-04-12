@@ -8,7 +8,7 @@ const PhotoGrid = ({cardData}) => {
             <div>
                 {cardData.map((data) => {
                     return (
-                        <div  key={data.id}>
+                        <div key={data.id}>
                             <div>
                                 <img src={data.link} alt={data.name}/>
                             </div>

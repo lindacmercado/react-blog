@@ -1,9 +1,6 @@
 import React from 'react';
-require('./Profile.css');
-
 
 const Profile = ({user}) => {
-    let style = user.textColor !== null ? {color: user.textColor} : "";
     return (
         <div>
             <div>
@@ -14,7 +11,7 @@ const Profile = ({user}) => {
                 <p>{user.intro}</p>
                 <div>
                   <div></div>
-                    <h1 style={style}>{user.likeCount}</h1>
+                    <h1>{user.likeCount}</h1>
                 </div>
 
 

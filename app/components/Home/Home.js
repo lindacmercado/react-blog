@@ -1,7 +1,6 @@
 import React from 'react';
 import BlogIntro from '../Blog-intro-container/Blog-intro-container';
 import {getUserInfo,getPosts} from '../../utils/helpers'
-require('./Home.css');
 
 class Home extends React.Component {
     constructor(props){
@@ -16,7 +15,7 @@ class Home extends React.Component {
 
     render(){
         return (
-            <div className="main-home-container">
+            <div>
                 <BlogIntro />
             </div>
         )
