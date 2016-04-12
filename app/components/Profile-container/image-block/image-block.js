@@ -4,16 +4,15 @@ require('./Image-block.css');
 
 const PhotoGrid = ({cardData}) => {
     return (
-        <div className="list-container">
-            <div className="grid-list">
+        <div>
+            <div>
                 {cardData.map((data) => {
                     return (
-                        //The Key here should be a id from our database
-                        <div className="list-group-item" key={data.id}>
-                            <div className="blog-image-container">
+                        <div key={data.id}>
+                            <div>
                                 <img src={data.link} alt={data.name}/>
                             </div>
-                            <div className="desc">
+                            <div>
                                 <p>{data.desc}</p>
                             </div>
                         </div>
