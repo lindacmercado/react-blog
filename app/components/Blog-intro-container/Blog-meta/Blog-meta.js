@@ -1,5 +1,5 @@
 import React from 'react';
-//require('./Blog-meta.css');
+require('./Blog-meta.css');
 
 
 const BlogMeta = ({metaInfo}) => {

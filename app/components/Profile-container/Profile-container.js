@@ -3,6 +3,9 @@ import Profile from './Profile/Profile';
 import PhotoGrid from './Image-block/Image-block';
 import {getUserInfo, getPosts} from '../../utils/helpers';
 require('./Profile-container.css');
+import connect from 'react-redux';
+import likeBlog from './Redux/Like';
+import unLikeBlog from '/Redux/Like';
 
 class ProfileContainer extends React.Component{
   constructor(props) {

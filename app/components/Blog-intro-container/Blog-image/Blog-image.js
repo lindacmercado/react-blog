@@ -1,6 +1,6 @@
 import React from 'react';
 import BlogLink from './Blog-link/Blog-link';
-//require('./Blog-image.css');
+require('./Blog-image.css');
 
 const BlogImage = (blogInfo) => {
   return (
