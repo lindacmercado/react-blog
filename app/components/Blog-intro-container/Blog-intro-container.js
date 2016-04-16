@@ -2,7 +2,7 @@ import React from 'react';
 import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
-//require('./Blog-intro-container.css');
+require('./Blog-intro-container.css');
 
 class BlogIntroContainer extends React.Component {
   constructor(props){
