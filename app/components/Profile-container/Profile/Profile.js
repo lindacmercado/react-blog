@@ -1,7 +1,7 @@
 import React from 'react';
-require('./Profile.css');
+//require('./Profile.css');
 
-const Profile = ({user}) => {
+const Profile = ({user, like, likeBlog, unLikeBlog}) => {
     return (
         <div>
             <div>
@@ -12,9 +12,13 @@ const Profile = ({user}) => {
                 <p>{user.intro}</p>
                 <div>
                     <h1>{user.likeCount}</h1>
-                </div>
+                    <h3>Like: {like}</h3>
+                    <button onClick={()=>likeBlog()}>LIKE</button>
+                    <button onClick={()=>unLikeBlog()}>UNLIKE</button>
             </div>
         </div>
+      </div>
+
     );
 };
 

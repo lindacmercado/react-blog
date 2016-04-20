@@ -2,7 +2,7 @@ import React from 'react';
 import {usersBlogData} from '../../utils/helpers'
 import BlogImage from './Blog-image/Blog-image';
 import BlogMeta from './Blog-meta/Blog-meta';
-require('./Blog-intro-container.css');
+//require('./Blog-intro-container.css');
 
 class BlogIntroContainer extends React.Component {
   constructor(props){
@@ -25,9 +25,9 @@ class BlogIntroContainer extends React.Component {
   render(){
           return (
               <div>
-                  {this.state.usersBlogData.map((data) => {
+                  {this.state.usersBlogData.map((data, index) => {
                       return (
-                          <div key={data.id}>
+                          <div className="Blog-intro" key={data.id}>
                               <BlogMeta metaInfo={data} />
                               <BlogImage blogInfo={data}/>
                           </div>

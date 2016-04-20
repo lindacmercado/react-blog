@@ -31,6 +31,4 @@ export function  usersBlogData () {
             return data
         });
 
-};
-
-
+}

@@ -10,7 +10,7 @@ export function reducer(state = initialState, action = {}) {
       return {
         like: 'true'
       };
-      case: UNLIKE:
+      case UNLIKE:
         return {
           like: 'false'
         };
@@ -21,7 +21,7 @@ export function reducer(state = initialState, action = {}) {
 
 export function likeBlog() {
   return {
-    type: Like
+    type: LIKE
   };
 }
 
